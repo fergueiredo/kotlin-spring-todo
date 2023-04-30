@@ -1,9 +1,12 @@
 package io.fergueiredo.idgen
 
+import org.slf4j.LoggerFactory
 import java.util.Base64
 import kotlin.random.Random
 
 object IdGen {
+    private val logger = LoggerFactory.getLogger(javaClass)
+
     fun newId(): String {
         val bytes = Random.nextBytes(4)
         val b64 = Base64.getEncoder().encode(bytes)
@@ -15,9 +18,9 @@ object IdGen {
             .replace("=", "")
             .trim()
 
-        println("Random bytes -> ${String(bytes)}")
-        println("Base64 -> $strB64")
-        println("IdGen::newID -> $modB64")
+        logger.trace("Random bytes -> ${String(bytes)}")
+        logger.trace("Base64 -> $strB64")
+        logger.info("IdGen::newID -> $modB64")
 
         return modB64
     }
